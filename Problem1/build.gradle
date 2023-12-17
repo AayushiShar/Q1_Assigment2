@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+java {
+    sourceCompatibility = '17'
+}
+
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    annotationProcessor('org.projectlombok:lombok:1.18.22')
+   implementation('org.projectlombok:1.18.22')
+    implementation 'io.github.classgraph:classgraph:4.8.87'
+    implementation 'org.reflections:reflections:0.9.12'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.github.javaparser:javaparser-core:2.0.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//import io.github.classgarph.ClassGraph
+
+test {
+    useJUnitPlatform()
+}
+
+
+task findAnnotatedClassesAndMethods(type: JavaExec){
+/*
+   doLast{
+       String packageName="org.example";
+       String annotationName="org.example.classDocumentaion";
+       new io.github.classgraph.ClassGraph().enableAnnotationInfo().whitelistPackages(packageName).scan()
+       .getClassesWithAnnotation(annotationName).forEach{classInfo->
+           println("Annotated Class: ${classInfo.getName()}")
+       }*/
+    main='org.example.FindCustomAnnotation'
+    classpath =sourceSets.main.runtimeClasspath
+   }
+        tasks.named('test')
+                {
+                    useJUnitPlatform()
+                }
+
